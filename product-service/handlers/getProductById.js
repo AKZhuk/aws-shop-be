@@ -12,8 +12,11 @@ exports.getProductById = async (event) => {
   }
 
   const response = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     statusCode: 200,
-    body: JSON.stringify({data: product}),
+    body: JSON.stringify(product),
   };
   return response;
 };

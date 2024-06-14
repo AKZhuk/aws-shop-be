@@ -17,9 +17,11 @@ functions:
       - httpApi:
           path: /products
           method: get
+          cors: true
   getProductById:
     handler: handlers/getProductById.getProductById
     events:
       - httpApi:
           path: /products/{id}
           method: get
+          cors: true
