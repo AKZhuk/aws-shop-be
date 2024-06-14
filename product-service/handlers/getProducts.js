@@ -1,6 +1,6 @@
 const {products} = require('../data');
 
-exports.getProducts = async (event) => {
+module.exports.getProducts = async (event) => {
   return {
     headers: {
       'Access-Control-Allow-Origin': '*',
