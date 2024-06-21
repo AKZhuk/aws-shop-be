@@ -1,0 +1,27 @@
+openapi: "3.0.1"
+info:
+  title: "dev-product-service"
+  version: "2024-06-14 09:22:26UTC"
+servers:
+- url: "https://itqxjtjeob.execute-api.eu-west-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: ""
+paths:
+  /products:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /products"
+  /products/{id}:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /products/{id}"
+    parameters:
+    - name: "id"
+      in: "path"
+      description: "Generated path parameter for id"
+      required: true
+      schema:
+        type: "string"
