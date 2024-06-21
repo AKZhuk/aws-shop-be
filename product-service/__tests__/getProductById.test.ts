@@ -1,4 +1,5 @@
-const {getProductById} = require('../handlers/getProductById');
+import { getProductById } from "../handlers/getProductById";
+
 
 describe('GetProductById', () => {
   const headers = {
