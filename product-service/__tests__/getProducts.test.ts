@@ -1,5 +1,6 @@
-const {products} = require('../data');
-const {getProducts} = require('../handlers/getProducts');
+import { getProducts } from "../handlers/getProducts";
+
+
 
 describe('GetProducts', () => {
   test('should return products', async () => {
@@ -9,13 +10,13 @@ describe('GetProducts', () => {
         id,
       },
     };
-    const {body, ...restResponse} = await getProducts(event);
+    const { body, ...restResponse } = await getProducts(event);
     expect(restResponse).toEqual({
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
       statusCode: 200,
     });
-    expect(body).toEqual(JSON.stringify(products));
+    expect(body).toEqual(JSON.stringify(getProducts));
   });
 });

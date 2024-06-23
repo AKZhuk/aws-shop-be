@@ -1,7 +1,7 @@
 openapi: "3.0.1"
 info:
   title: "dev-product-service"
-  version: "2024-06-14 09:22:26UTC"
+  version: "2024-06-23 19:43:51UTC"
 servers:
 - url: "https://itqxjtjeob.execute-api.eu-west-1.amazonaws.com/{basePath}"
   variables:
@@ -13,6 +13,10 @@ paths:
       responses:
         default:
           description: "Default response for GET /products"
+    post:
+      responses:
+        default:
+          description: "Default response for POST /products"
   /products/{id}:
     get:
       responses:

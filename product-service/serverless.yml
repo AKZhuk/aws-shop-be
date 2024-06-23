@@ -9,10 +9,24 @@ provider:
   runtime: nodejs20.x
   stage: dev
   region: eu-west-1
-
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:ListTables
+        - dynamodb:DescribeTables
+      Resource: "arn:aws:dynamodb:eu-west-1:*:*"
 functions:
   getProducts:
     handler: handlers/getProducts.getProducts
+    environment:
+      PRODUCTS_TABLE: products
+      STOCKS_TABLE: stocks
     events:
       - httpApi:
           path: /products
@@ -20,8 +34,49 @@ functions:
           cors: true
   getProductById:
     handler: handlers/getProductById.getProductById
+    environment:
+      PRODUCTS_TABLE: products
+      STOCKS_TABLE: stocks
     events:
       - httpApi:
           path: /products/{id}
           method: get
           cors: true
+  createProduct:
+    handler: handlers/createProduct.createProduct
+    environment:
+      PRODUCTS_TABLE: products
+      STOCKS_TABLE: stocks
+    events:
+      - httpApi:
+          path: /products
+          method: post
+          cors: true
+resources:
+  Resources:
+    productsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: products
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    stocksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: stocks
+        AttributeDefinitions:
+          - AttributeName: product_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: product_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
