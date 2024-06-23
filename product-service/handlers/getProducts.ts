@@ -7,8 +7,9 @@ const ddb = new DynamoDB.DocumentClient();
 export const getProducts = async (event: any) => {
 
   const { PRODUCTS_TABLE, STOCKS_TABLE } = process.env;
-  try {
+  console.log('event', event);
 
+  try {
   const [productsResult, stocksResult] = await Promise.all([
     ddb.scan({ TableName: PRODUCTS_TABLE! }).promise(),
     ddb.scan({ TableName: STOCKS_TABLE! }).promise(),

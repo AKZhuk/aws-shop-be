@@ -6,6 +6,8 @@ import { headers } from "../constants";
 const ddb = new DynamoDB.DocumentClient();
 
 export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+
+  console.log('event', event);
   const { id } = event.pathParameters;
 
   const { PRODUCTS_TABLE, STOCKS_TABLE } = process.env;
