@@ -3,31 +3,27 @@ import AWS from 'aws-sdk'
 import { v4 as uuidv4 } from 'uuid'
 import { headers } from '../constants';
 import HttpStatusCode from '../types/HttpStatusCode';
-import schema from '../types.schema.json';
-import Ajv from 'ajv';
-
-
-const ajv = new Ajv();
+import { isValidProduct } from '../helpers/isValidProduct';
 
 export const createProduct = async (event: APIGatewayEvent) => {
   const { PRODUCTS_TABLE, STOCKS_TABLE } = process.env;
   const ddb = new AWS.DynamoDB.DocumentClient();
+  const data = JSON.parse(event.body!)
+  console.log('data', data);
 
-  console.log('event', event);
 
 
-  const isValidBodyParams = ajv.compile(
-    schema.Product
-  );
-  if (!isValidBodyParams(event.body)) {
+
+  if (!isValidProduct(data)) {
     return {
       statusCode: HttpStatusCode.BAD_REQUEST,
       headers,
-      body: 'Invalid data',
+      body: 'Invalid payload data',
     };
   }
+
   const id = uuidv4();
-  const { title, description, price, count } = event.body
+  const { title, description, price, count } = data
   try {
     const newProduct = {
       id,
